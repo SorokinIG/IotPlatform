@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IotPlatform.Api", "IotPlatform.Api\IotPlatform.Api.csproj", "{0406DD99-7969-4037-912C-AC3AD63113C0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IotPlatform.Core", "IotPlatform.Core\IotPlatform.Core.csproj", "{CB4DBF98-EFC3-440E-A46D-B08C33700F7B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IotPlatform.Infrastructure", "IotPlatform.Infrastructure\IotPlatform.Infrastructure.csproj", "{86572955-A942-4530-B053-70E39A959FFF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IotPlatform.Worker", "IotPlatform.Worker\IotPlatform.Worker.csproj", "{A3E0C3C5-34FF-4B30-947E-C200D9A1AD55}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{ECDF7A85-999B-4A59-85A3-EA4E2B45EFA5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iotPlatform.Tests", "..\iotPlatform.Tests\iotPlatform.Tests.csproj", "{897E1D55-AECF-4014-A05B-1B37BD5A9806}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0406DD99-7969-4037-912C-AC3AD63113C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0406DD99-7969-4037-912C-AC3AD63113C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0406DD99-7969-4037-912C-AC3AD63113C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0406DD99-7969-4037-912C-AC3AD63113C0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CB4DBF98-EFC3-440E-A46D-B08C33700F7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CB4DBF98-EFC3-440E-A46D-B08C33700F7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CB4DBF98-EFC3-440E-A46D-B08C33700F7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CB4DBF98-EFC3-440E-A46D-B08C33700F7B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{86572955-A942-4530-B053-70E39A959FFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86572955-A942-4530-B053-70E39A959FFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86572955-A942-4530-B053-70E39A959FFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86572955-A942-4530-B053-70E39A959FFF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A3E0C3C5-34FF-4B30-947E-C200D9A1AD55}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3E0C3C5-34FF-4B30-947E-C200D9A1AD55}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3E0C3C5-34FF-4B30-947E-C200D9A1AD55}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3E0C3C5-34FF-4B30-947E-C200D9A1AD55}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ECDF7A85-999B-4A59-85A3-EA4E2B45EFA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ECDF7A85-999B-4A59-85A3-EA4E2B45EFA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ECDF7A85-999B-4A59-85A3-EA4E2B45EFA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ECDF7A85-999B-4A59-85A3-EA4E2B45EFA5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{897E1D55-AECF-4014-A05B-1B37BD5A9806}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{897E1D55-AECF-4014-A05B-1B37BD5A9806}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{897E1D55-AECF-4014-A05B-1B37BD5A9806}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{897E1D55-AECF-4014-A05B-1B37BD5A9806}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A758144E-4D2C-46B2-B1A4-0657F838AB0B}
+	EndGlobalSection
+EndGlobal
