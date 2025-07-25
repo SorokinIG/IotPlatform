@@ -20,10 +20,13 @@ namespace IotPlatform.Infrastructure.Services
             _services = services;
             _logger = logger;
 
+            var bootstrapServers = config["Kafka:BootstrapServers"];
+            var groupId = config["Kafka:GroupId"];
+
             _consumer = new ConsumerBuilder<Ignore, string>(new ConsumerConfig
             {
                 BootstrapServers = config["Kafka:BootstrapServers"],
-                GroupId = "iot-platform-group",
+                GroupId = "iot-worker-group",
                 AutoOffsetReset = AutoOffsetReset.Earliest
             }).Build();
         }
@@ -31,6 +34,7 @@ namespace IotPlatform.Infrastructure.Services
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             _consumer.Subscribe("telemetry");
+            _logger.LogInformation("Consumer started for topic: telemetry");
 
             while (!stoppingToken.IsCancellationRequested)
             {
@@ -41,8 +45,10 @@ namespace IotPlatform.Infrastructure.Services
                     var repo = scope.ServiceProvider.GetRequiredService<ITelemetryRepository>();
 
                     var data = JsonSerializer.Deserialize<TelemetryData>(message.Message.Value);
+                    _logger.LogInformation($"Deserialized: DeviceId={data.DeviceId}, Value={data.Value}");
                     await repo.AddAsync(data);
                     await repo.SaveAsync();
+                    _logger.LogInformation("Data saved to DB");
                 }
                 catch (Exception ex)
                 {

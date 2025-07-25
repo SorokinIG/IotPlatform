@@ -6,10 +6,12 @@ using IotPlatform.Infrastructure.Data;
 using IotPlatform.Infrastructure.Repositories;
 using IotPlatform.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 using System.Diagnostics;
+using System.Security.Cryptography.X509Certificates;
 
 /* 
- План поэтапной разработки IoT платформы
+ План поэтапной разработки IoT платформы (IoT платформа для обработки событий с устройств)
 1. Проектирование архитектуры
 Цель: Определить основные компоненты системы и технологии.
 
@@ -74,10 +76,28 @@ builder.Services.AddControllers();
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+builder.Services.AddStackExchangeRedisCache(options => {
+    options.Configuration = "redis:6379";
+    options.InstanceName = "IoTPlatform_";
+});
+
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c => {
+    c.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "IoT Platform API",
+        Version = "v1"
+    });
+});
+builder.Services.AddCors(options => {
+    options.AddPolicy("AllowAll", builder => {
+        builder.AllowAnyOrigin()
+               .AllowAnyMethod()
+               .AllowAnyHeader();
+    });
+});
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 builder.Services.AddValidatorsFromAssemblyContaining<DeviceDtoValidator>();
 builder.Services.AddValidatorsFromAssemblyContaining<TelemetryDataDtoValidator>();
@@ -88,6 +108,39 @@ builder.Services.AddScoped<IDeviceRepository, DeviceRepository>();
 builder.Services.AddScoped<ITelemetryRepository, TelemetryRepository>();
 builder.Services.AddSingleton<IKafkaProducerService, KafkaProducerService>();
 
+builder.WebHost.ConfigureKestrel(options => {
+    options.ListenAnyIP(80);
+
+    options.ListenAnyIP(443, listenOptions => {
+        var certPath = "/https/iotplatformapi.pfx";
+        Console.WriteLine($"Пытаемся загрузить сертификат из: {certPath}");
+
+        if (!File.Exists(certPath))
+        {
+            throw new FileNotFoundException($"Файл сертификата не найден: {certPath}");
+        }
+
+        try
+        {
+            var cert = new X509Certificate2(
+                certPath,
+                "YourPassword123",
+                X509KeyStorageFlags.EphemeralKeySet |
+                X509KeyStorageFlags.Exportable);
+
+            listenOptions.UseHttps(cert);
+            Console.WriteLine("Сертификат успешно загружен");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Ошибка загрузки сертификата: {ex}");
+            throw;
+        }
+    });
+});
+
+
+
 var app = builder.Build();
 
 
@@ -96,9 +149,11 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c => {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "IoT Platform API v1");
+    });
 }
-
+app.UseCors("AllowAll");
 app.UseHttpsRedirection();
 app.UseAuthorization();
 

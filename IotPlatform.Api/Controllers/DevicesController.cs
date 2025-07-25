@@ -34,7 +34,10 @@ namespace IotPlatform.Api.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(Guid id)
         {
-            var device = await _repo.GetByIdAsync(id);
+            //var device = await _repo.GetByIdAsync(id);
+            //return device == null ? NotFound() : Ok(device);
+
+            var device = await _repo.GetDeviceCachedAsync(id); // Используем кэшированную версию
             return device == null ? NotFound() : Ok(device);
         }
 

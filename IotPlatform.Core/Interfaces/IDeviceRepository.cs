@@ -7,5 +7,6 @@ namespace IotPlatform.Core.Interfaces
     {
         Task<IEnumerable<Device>> GetByTypeAsync(string type);
         Task<bool> ExistsAsync(Guid deviceId);
+        Task<Device> GetDeviceCachedAsync(Guid deviceId);
     }
 }
