@@ -1,6 +1,3 @@
-На основе предоставленных файлов я сгенерировал comprehensive README для вашего IoT проекта:
-
-```markdown
 # IoT Platform
 
 ![.NET](https://img.shields.io/badge/.NET-8.0-purple)
